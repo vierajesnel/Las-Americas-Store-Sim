@@ -9,6 +9,9 @@ you can before 9 PM.
 Built with Phaser 4, TypeScript and Vite. Plays in a phone browser held
 sideways; add it to the home screen for full screen.
 
+**Play it:** https://vierajesnel.github.io/Las-Americas-Store-Sim/ (rebuilt and
+redeployed by `.github/workflows/pages.yml` on every push that touches `game/`).
+
 ## Run it
 
 ```sh

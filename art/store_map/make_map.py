@@ -41,7 +41,7 @@ CARPET, CARPET_LT, CARPET_DK = (72, 82, 102), (84, 94, 116), (62, 70, 90)
 FLOOR_SHADOW = (52, 60, 78)
 WHITE_TOP, TABLE_EDGE, PLY, HOLE = (246, 247, 249), (206, 210, 218), (226, 206, 168), (196, 200, 208)
 DARK, DARK_TIP = (44, 44, 52), (96, 98, 106)
-BENCH_TOP, BENCH, BENCH_HI = (78, 80, 90), (52, 54, 62), (104, 106, 116)
+SOFA_TOP, SOFA, SOFA_HI = (78, 80, 90), (52, 54, 62), (104, 106, 116)
 CRED_TOP, CRED, CRED_DK = (88, 92, 102), (66, 70, 80), (50, 52, 60)
 BLUE_WALL, HALL = (66, 146, 224), (150, 146, 140)
 STOOL_BLUE, CHROME = (52, 112, 196), (196, 202, 212)
@@ -331,20 +331,29 @@ def attend_desk(d, x, y):
     d.line([(x + 16, y + 6), (x + 26, y + 9)], fill=(214, 216, 222))  # charging cable
 
 
-def bench_back(d, x, y):
-    R(d, x, y - 10, 32, 4, BENCH_TOP)
-    R(d, x, y - 6, 32, 6, BENCH)
-    R(d, x + 1, y - 9, 30, 1, BENCH_HI)
+def sofa_back(d, x, y):
+    """Backrest, drawn before anyone sitting so they sit in front of it."""
+    R(d, x, y - 12, 64, 4, SOFA_TOP)
+    R(d, x + 1, y - 11, 62, 1, SOFA_HI)
+    R(d, x, y - 8, 64, 9, SOFA)
+    for sx in (21, 42):
+        R(d, x + sx, y - 8, 1, 9, CRED_DK)
 
 
-def bench(d, x, y):
-    floor_shadow(d, x - 2, y + 22, 66, 8)
-    for bx, by in ((x, y), (x + 28, y + 6)):
-        R(d, bx, by, 32, 10, BENCH_TOP)
-        R(d, bx + 1, by + 1, 30, 1, BENCH_HI)
-        R(d, bx, by + 10, 32, 8, BENCH)
-        R(d, bx + 2, by + 18, 2, 1, CHROME)
-        R(d, bx + 28, by + 18, 2, 1, CHROME)
+def sofa(d, x, y):
+    """Arms and seat cushions, drawn in front of anyone sitting."""
+    floor_shadow(d, x - 2, y + 10, 68, 8)
+    for ax in (x, x + 57):
+        R(d, ax, y - 6, 7, 4, SOFA_TOP)
+        R(d, ax + 1, y - 5, 5, 1, SOFA_HI)
+        R(d, ax, y - 2, 7, 16, SOFA)
+    R(d, x + 7, y, 50, 7, SOFA_TOP)
+    R(d, x + 8, y + 1, 48, 1, SOFA_HI)
+    for sx in (23, 40):
+        R(d, x + sx, y, 1, 7, CRED_DK)
+    R(d, x + 7, y + 7, 50, 7, SOFA)
+    for lx in (x + 2, x + 59):
+        R(d, lx, y + 14, 3, 2, CHROME)
 
 
 def credenza(d, x, y):
@@ -608,10 +617,10 @@ def furniture():
         (143, lambda d: demo_table(d, 186, 112, SAMSUNGS, sign=True)),
         (77, lambda d: fiber_banner(d, 136, 32)),
         (209, lambda d: pc_podium(d, 228, 187)),
-        (199, lambda d: attend_desk(d, 300, 172)),
-        (151, lambda d: bench_back(d, 356, 152)),
-        (174, lambda d: bench(d, 356, 152)),
-        (215, lambda d: credenza(d, 400, 200)),
+        (178, lambda d: attend_desk(d, 284, 152)),
+        (151, lambda d: sofa_back(d, 356, 152)),
+        (167, lambda d: sofa(d, 356, 152)),
+        (215, lambda d: credenza(d, 356, 200)),
         (139, lambda d: demo_table(d, 424, 108, IPHONES)),
         (136, lambda d: kiosk(d, 486, 98)),
     ]
@@ -668,22 +677,22 @@ def mock_people():
 
     add(crew("Madai"), 210, 180)                                   # running the check-in PC
     add(customer("senora"), 256, 181, needs("bill", 0.75))         # in line
-    add(customer("cap_blue"), 274, 179, needs("phone", 0.45))      # in line
-    add(customer("hoodie_green"), 364, 132, needs("internet", 0.2))  # waiting on the bench
+    add(customer("cap_blue"), 274, 180, needs("phone", 0.45))      # in line
+    add(customer("hoodie_green"), 364, 132, needs("internet", 0.2))  # waiting on the sofa
     add(crew("Jesnel"), 36, 104)                                   # attending at the client table
     add(customer("hoodie_purple"), 56, 104)
     add(crew("Nathalya"), 206, 90)                                 # Samsung table
     add(crew("Daniela"), 444, 86)                                  # iPhone table
     add(crew("Alex"), 370, 50)                                     # accessory wall
     add(customer("cap_green"), 392, 52, needs("accessory", 0.9))
-    add(crew("Matthew"), 300, 118)                                 # managing, allegedly
+    add(crew("Matthew"), 312, 104)                                 # managing, allegedly
     add(customer("cap_red"), 488, 62, needs("unsure"))             # just walked in
     return P
 
 
 LABELS = [  # (text, x, y) in 1x map coordinates, anchor = center
     ("Entrance", 470, 84), ("iPhone table", 452, 146), ("Vertical TV", 470, 132),
-    ("Waiting bench", 388, 186), ("TV / Fiber demo", 432, 196), ("Attend desk", 324, 164),
+    ("Waiting sofa", 388, 176), ("TV / Fiber demo", 388, 207), ("Attend desk", 308, 144),
     ("Check-in PC (line)", 241, 176), ("Back room", 199, 208),
     ("Samsung table", 214, 150), ("Pixel / Moto table", 140, 98),
     ("Client table", 60, 175), ("Fiber banner", 141, 84), ("Side door (not entrance)", 166, 70),

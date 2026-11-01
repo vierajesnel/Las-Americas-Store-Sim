@@ -1,0 +1,147 @@
+{
+ "width": 512,
+ "height": 224,
+ "props": [
+  {
+   "key": "stools_north",
+   "x": 28,
+   "y": 112,
+   "baseY": 125,
+   "footprint": null
+  },
+  {
+   "key": "client_table",
+   "x": 18,
+   "y": 120,
+   "baseY": 157,
+   "footprint": [
+    18,
+    134,
+    101,
+    160
+   ]
+  },
+  {
+   "key": "stools_south",
+   "x": 28,
+   "y": 157,
+   "baseY": 170,
+   "footprint": null
+  },
+  {
+   "key": "table_pixel",
+   "x": 112,
+   "y": 112,
+   "baseY": 143,
+   "footprint": [
+    110,
+    120,
+    169,
+    146
+   ]
+  },
+  {
+   "key": "table_samsung",
+   "x": 186,
+   "y": 103,
+   "baseY": 143,
+   "footprint": [
+    184,
+    120,
+    243,
+    146
+   ]
+  },
+  {
+   "key": "fiber_banner",
+   "x": 135,
+   "y": 32,
+   "baseY": 77,
+   "footprint": [
+    133,
+    70,
+    149,
+    80
+   ]
+  },
+  {
+   "key": "pc_podium",
+   "x": 228,
+   "y": 175,
+   "baseY": 209,
+   "footprint": [
+    226,
+    194,
+    255,
+    212
+   ]
+  },
+  {
+   "key": "attend_desk",
+   "x": 284,
+   "y": 152,
+   "baseY": 178,
+   "footprint": [
+    282,
+    160,
+    333,
+    181
+   ]
+  },
+  {
+   "key": "sofa_back",
+   "x": 356,
+   "y": 140,
+   "baseY": 151,
+   "footprint": [
+    354,
+    144,
+    421,
+    170
+   ]
+  },
+  {
+   "key": "sofa",
+   "x": 354,
+   "y": 146,
+   "baseY": 167,
+   "footprint": null
+  },
+  {
+   "key": "credenza",
+   "x": 356,
+   "y": 194,
+   "baseY": 215,
+   "footprint": [
+    354,
+    198,
+    434,
+    216
+   ]
+  },
+  {
+   "key": "table_iphone",
+   "x": 424,
+   "y": 108,
+   "baseY": 139,
+   "footprint": [
+    422,
+    116,
+    481,
+    142
+   ]
+  },
+  {
+   "key": "kiosk",
+   "x": 486,
+   "y": 98,
+   "baseY": 136,
+   "footprint": [
+    484,
+    126,
+    501,
+    138
+   ]
+  }
+ ]
+}

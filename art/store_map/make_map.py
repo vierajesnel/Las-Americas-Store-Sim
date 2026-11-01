@@ -50,17 +50,29 @@ RED_SIGN, RED_TXT = (60, 22, 26), (240, 70, 70)
 
 # 3x5 pixel font for signage
 FONT = {
-    "A": [".#.", "#.#", "###", "#.#", "#.#"], "C": [".##", "#..", "#..", "#..", ".##"],
-    "D": ["##.", "#.#", "#.#", "#.#", "##."], "E": ["###", "#..", "##.", "#..", "###"],
+    "A": [".#.", "#.#", "###", "#.#", "#.#"], "B": ["##.", "#.#", "##.", "#.#", "##."],
+    "C": [".##", "#..", "#..", "#..", ".##"], "D": ["##.", "#.#", "#.#", "#.#", "##."],
+    "E": ["###", "#..", "##.", "#..", "###"], "F": ["###", "#..", "##.", "#..", "#.."],
     "G": [".##", "#..", "#.#", "#.#", ".##"], "H": ["#.#", "#.#", "###", "#.#", "#.#"],
-    "I": ["###", ".#.", ".#.", ".#.", "###"], "N": ["##.", "#.#", "#.#", "#.#", "#.#"],
+    "I": ["###", ".#.", ".#.", ".#.", "###"], "J": ["..#", "..#", "..#", "#.#", ".#."],
+    "K": ["#.#", "#.#", "##.", "#.#", "#.#"], "L": ["#..", "#..", "#..", "#..", "###"],
+    "M": ["#.#", "###", "###", "#.#", "#.#"], "N": ["##.", "#.#", "#.#", "#.#", "#.#"],
     "O": [".#.", "#.#", "#.#", "#.#", ".#."], "P": ["##.", "#.#", "##.", "#..", "#.."],
-    "R": ["##.", "#.#", "##.", "#.#", "#.#"], "S": [".##", "#..", ".#.", "..#", "##."],
-    "T": ["###", ".#.", ".#.", ".#.", ".#."], "U": ["#.#", "#.#", "#.#", "#.#", "###"],
-    "X": ["#.#", "#.#", ".#.", "#.#", "#.#"], "$": [".##", "##.", ".#.", ".##", "##."],
-    "0": ["###", "#.#", "#.#", "#.#", "###"], "2": ["##.", "..#", ".#.", "#..", "###"],
-    "3": ["##.", "..#", ".#.", "..#", "##."], "4": ["#.#", "#.#", "###", "..#", "..#"],
-    "5": ["###", "#..", "##.", "..#", "##."],
+    "Q": [".#.", "#.#", "#.#", "##.", ".##"], "R": ["##.", "#.#", "##.", "#.#", "#.#"],
+    "S": [".##", "#..", ".#.", "..#", "##."], "T": ["###", ".#.", ".#.", ".#.", ".#."],
+    "U": ["#.#", "#.#", "#.#", "#.#", "###"], "V": ["#.#", "#.#", "#.#", "#.#", ".#."],
+    "W": ["#.#", "#.#", "###", "###", "#.#"], "X": ["#.#", "#.#", ".#.", "#.#", "#.#"],
+    "Y": ["#.#", "#.#", ".#.", ".#.", ".#."], "Z": ["###", "..#", ".#.", "#..", "###"],
+    "0": ["###", "#.#", "#.#", "#.#", "###"], "1": [".#.", "##.", ".#.", ".#.", "###"],
+    "2": ["##.", "..#", ".#.", "#..", "###"], "3": ["##.", "..#", ".#.", "..#", "##."],
+    "4": ["#.#", "#.#", "###", "..#", "..#"], "5": ["###", "#..", "##.", "..#", "##."],
+    "6": [".##", "#..", "###", "#.#", "###"], "7": ["###", "..#", ".#.", ".#.", ".#."],
+    "8": ["###", "#.#", "###", "#.#", "###"], "9": ["###", "#.#", "###", "..#", "##."],
+    "$": [".##", "##.", ".#.", ".##", "##."], "+": ["...", ".#.", "###", ".#.", "..."],
+    "-": ["...", "...", "###", "...", "..."], "!": [".#.", ".#.", ".#.", "...", ".#."],
+    "?": ["##.", "..#", ".#.", "...", ".#."], ":": ["...", ".#.", "...", ".#.", "..."],
+    ".": ["...", "...", "...", "...", ".#."], "%": ["#..", "..#", ".#.", "#..", "..#"],
+    " ": ["...", "...", "...", "...", "..."],
 }
 
 
@@ -405,6 +417,8 @@ ICONS = {  # need bubbles: what the customer came in for
     "internet": ([".#####.", "#.....#", "..###..", ".#...#.", "...#...", "......."], (50, 130, 220)),
     "accessory": ([".###.", "#...#", "#...#", "##.##", "##.##", "....."], (80, 80, 92)),
     "unsure": ([".###.", "#...#", "...#.", "..#..", ".....", "..#.."], (200, 120, 40)),
+    "happy": ([".#.#.", "#####", "#####", ".###.", "..#..", "....."], (226, 60, 90)),
+    "angry": (["##.##", "#...#", ".....", "#...#", "##.##", "....."], (220, 40, 40)),
 }
 BUBBLE = [
     ".KKKKKKKKK.",
@@ -477,21 +491,25 @@ PIXELS = [(232, 232, 228), (60, 64, 60), (150, 190, 220), (110, 140, 100)]
 
 
 def furniture():
-    """(base_y, draw(d)) for everything standing on the floor."""
+    """(name, base_y, footprint, draw(d)) for everything standing on the floor.
+
+    base_y sorts props against people (whoever's feet are lower is drawn later).
+    footprint is the floor rectangle [x0, y0, x1, y1] people can't walk into.
+    """
     return [
-        (125, lambda d: (stool(d, 28, 113), stool(d, 72, 113))),
-        (157, lambda d: client_table(d, 20, 126)),
-        (170, lambda d: (stool(d, 28, 158), stool(d, 72, 158))),
-        (143, lambda d: demo_table(d, 112, 112, PIXELS)),
-        (143, lambda d: demo_table(d, 186, 112, SAMSUNGS, sign=True)),
-        (77, lambda d: fiber_banner(d, 136, 32)),
-        (209, lambda d: pc_podium(d, 228, 187)),
-        (178, lambda d: attend_desk(d, 284, 152)),
-        (151, lambda d: sofa_back(d, 356, 152)),
-        (167, lambda d: sofa(d, 356, 152)),
-        (215, lambda d: credenza(d, 356, 200)),
-        (139, lambda d: demo_table(d, 424, 108, IPHONES)),
-        (136, lambda d: kiosk(d, 486, 98)),
+        ("stools_north", 125, None, lambda d: (stool(d, 28, 113), stool(d, 72, 113))),
+        ("client_table", 157, [18, 134, 101, 160], lambda d: client_table(d, 20, 126)),
+        ("stools_south", 170, None, lambda d: (stool(d, 28, 158), stool(d, 72, 158))),
+        ("table_pixel", 143, [110, 120, 169, 146], lambda d: demo_table(d, 112, 112, PIXELS)),
+        ("table_samsung", 143, [184, 120, 243, 146], lambda d: demo_table(d, 186, 112, SAMSUNGS, sign=True)),
+        ("fiber_banner", 77, [133, 70, 149, 80], lambda d: fiber_banner(d, 136, 32)),
+        ("pc_podium", 209, [226, 194, 255, 212], lambda d: pc_podium(d, 228, 187)),
+        ("attend_desk", 178, [282, 160, 333, 181], lambda d: attend_desk(d, 284, 152)),
+        ("sofa_back", 151, [354, 144, 421, 170], lambda d: sofa_back(d, 356, 152)),
+        ("sofa", 167, None, lambda d: sofa(d, 356, 152)),
+        ("credenza", 215, [354, 198, 434, 216], lambda d: credenza(d, 356, 200)),
+        ("table_iphone", 139, [422, 116, 481, 142], lambda d: demo_table(d, 424, 108, IPHONES)),
+        ("kiosk", 136, [484, 126, 501, 138], lambda d: kiosk(d, 486, 98)),
     ]
 
 
@@ -517,7 +535,7 @@ def render(people=()):
     """people: (base_y, image, x, y, extras) where extras draws bubbles/bars."""
     img = base_map()
     d = ImageDraw.Draw(img)
-    items = [(by, "f", fn) for by, fn in furniture()]
+    items = [(by, "f", fn) for _, by, _, fn in furniture()]
     items += [(by, "p", p) for by, *p in people]
     for _, kind, obj in sorted(items, key=lambda t: t[0]):
         if kind == "f":
@@ -581,7 +599,53 @@ def labeled(scale=2):
     return img
 
 
+def export_game_assets(out):
+    """Background, props (+ props.json), need bubbles and the bitmap font for the game."""
+    import json
+
+    out.mkdir(parents=True, exist_ok=True)
+    base_map().save(out / "store_bg.png")
+
+    (out / "props").mkdir(exist_ok=True)
+    props = []
+    for name, base_y, footprint, fn in furniture():
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        fn(ImageDraw.Draw(layer))
+        x0, y0, x1, y1 = layer.getbbox()
+        layer.crop((x0, y0, x1, y1)).save(out / "props" / f"{name}.png")
+        props.append({"key": name, "x": x0, "y": y0, "baseY": base_y, "footprint": footprint})
+    (out / "props.json").write_text(json.dumps({"width": W, "height": H, "props": props}, indent=1))
+
+    for icon in ICONS:
+        img = Image.new("RGBA", (11, 10), (0, 0, 0, 0))
+        bubble(img, 0, 0, icon)
+        img.save(out / f"bubble_{icon}.png")
+
+    # 3x5 glyphs with a baked-in dark outline: 5x7 cells, 4px advance. White so it can be tinted.
+    chars = list(FONT)
+    font = Image.new("RGBA", (len(chars) * 5, 7), (0, 0, 0, 0))
+    xml = []
+    for i, ch in enumerate(chars):
+        ox = i * 5
+        on = {(gx, gy) for gy, row in enumerate(FONT[ch]) for gx, px in enumerate(row) if px == "#"}
+        for gx, gy in on:
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    font.putpixel((ox + 1 + gx + dx, 1 + gy + dy), (27, 20, 32, 255))
+        for gx, gy in on:
+            font.putpixel((ox + 1 + gx, 1 + gy), (255, 255, 255, 255))
+        xml.append(f'  <char id="{ord(ch)}" x="{ox}" y="0" width="5" height="7" '
+                   f'xoffset="0" yoffset="0" xadvance="4" page="0"/>')
+    font.save(out / "pixelfont.png")
+    (out / "pixelfont.xml").write_text(
+        '<?xml version="1.0"?>\n<font>\n <info face="pixel3x5" size="7"/>\n'
+        f' <common lineHeight="8" base="7" scaleW="{font.width}" scaleH="7" pages="1"/>\n'
+        ' <pages><page id="0" file="pixelfont.png"/></pages>\n'
+        f' <chars count="{len(chars)}">\n' + "\n".join(xml) + "\n </chars>\n</font>\n")
+
+
 if __name__ == "__main__":
+    export_game_assets(HERE.parent.parent / "game" / "public" / "assets" / "map")
     render().save(HERE / "store_map.png")
     labeled().save(HERE / "store_labeled.png")
     render(mock_people()).resize((W * 3, H * 3), Image.NEAREST).save(HERE / "store_mock.png")

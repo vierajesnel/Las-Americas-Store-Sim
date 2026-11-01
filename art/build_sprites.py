@@ -214,7 +214,24 @@ def preview(sheets, scale=4):
     gif[0].save(HERE / "walk_preview.gif", save_all=True, append_images=gif[1:], duration=160, loop=0)
 
 
+def export_icons():
+    """Home-screen icons: Madai (crown and all) on store blue with the LED strip."""
+    icons = HERE.parent / "game" / "public" / "icons"
+    icons.mkdir(parents=True, exist_ok=True)
+    entry = CREW["Madai"]
+    figure = paint(entry["front"], {**BASE, **entry["palette"]})
+    for size in (192, 512):
+        img = Image.new("RGBA", (size, size), (34, 46, 86, 255))
+        unit = size // 48
+        img.paste((52, 206, 255, 255), (0, unit * 5, size, unit * 6))
+        scale = size * 5 // 6 // FRAME_H
+        big = figure.resize((FRAME_W * scale, FRAME_H * scale), Image.NEAREST)
+        img.alpha_composite(big, ((size - big.width) // 2, size - big.height - unit * 2))
+        img.save(icons / f"icon-{size}.png")
+
+
 if __name__ == "__main__":
+    export_icons()
     OUT.mkdir(parents=True, exist_ok=True)
     sheets = all_sheets()
     for key, (img, _) in sheets.items():

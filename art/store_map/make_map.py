@@ -614,7 +614,10 @@ def export_game_assets(out):
         x0, y0, x1, y1 = layer.getbbox()
         layer.crop((x0, y0, x1, y1)).save(out / "props" / f"{name}.png")
         props.append({"key": name, "x": x0, "y": y0, "baseY": base_y, "footprint": footprint})
-    (out / "props.json").write_text(json.dumps({"width": W, "height": H, "props": props}, indent=1))
+    # layout data is bundled with the code, not loaded at runtime
+    data_dir = out.parent.parent.parent / "src" / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    (data_dir / "props.json").write_text(json.dumps({"width": W, "height": H, "props": props}, indent=1) + "\n")
 
     for icon in ICONS:
         img = Image.new("RGBA", (11, 10), (0, 0, 0, 0))

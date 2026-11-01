@@ -22,8 +22,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / "sprite_test"))
-from make_sprites import BASE, CHARACTERS  # noqa: E402
+sys.path.insert(0, str(HERE.parent))
+from characters import BASE, CREW, CUSTOMER_LOOKS, CUSTOMER_SHAPES  # noqa: E402
 
 W, H = 512, 224
 FLOOR_TOP, FLOOR_BOTTOM = 64, 215
@@ -399,137 +399,6 @@ def door_mat(d):
 
 # --- people ----------------------------------------------------------------
 
-CUSTOMERS = {
-    "cap": [
-        "................",
-        "................",
-        ".....KKKKKK.....",
-        "....KRRRRRRK....",
-        "...KRRRrRRRRK...",
-        "..KRRRRRRRRRRK..",
-        "..KRRRRRRRRRRK..",
-        ".KrrrrrrrrrrrrK.",
-        ".KKKKKKKKKKKKKK.",
-        "..KHSSSSSSSSHK..",
-        ".KSSSESSSSESSSK.",
-        ".KSSSESSSSESSSK.",
-        "..KsSSSSSSSSsK..",
-        "..KsSSSMMSSSsK..",
-        "...KsSSSSSSsK...",
-        "....KKssssKK....",
-        "...KTTTTTTTTK...",
-        "..KTTTTTTTTTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KSStTTTTtSSK..",
-        "..KSStTTTTtSSK..",
-        "..KSSKPPPPKSSK..",
-        "...KKPPPPPPKK...",
-        "....KPPPPPPK....",
-        "....KPPKKPPK....",
-        "....KSSKKSSK....",
-        "....KSSKKSSK....",
-        "....KsSKKSsK....",
-        "...KOOOKKOOOK...",
-        "...KOoOKKOoOK...",
-        "...KKKKKKKKKK...",
-    ],
-    "senora": [
-        "................",
-        "......KKKK......",
-        ".....KhHHhK.....",
-        "....KKHHHHKK....",
-        "...KHHhHHhHHK...",
-        "..KHHHHHHHHHHK..",
-        "..KHHHHhHHHHHK..",
-        "..KHHSSSSSSHHK..",
-        "..KHBBSSSSBBHK..",
-        "..KSSSSSSSSSSK..",
-        ".KSSSESSSSESSSK.",
-        ".KSSSESSSSESSSK.",
-        "..KsXSSSSSSXsK..",
-        "..KsSSSMMSSSsK..",
-        "...KsSSSSSSsK...",
-        "....KKssssKK....",
-        "...KTTTTTTTTK...",
-        "..KTTTTGTTTTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KSSKPPPPKSSK..",
-        "...KKPPPPPPKK...",
-        "....KPPPPPPK....",
-        "....KPPKKPPK....",
-        "....KPPKKPPK....",
-        "....KPPKKPPK....",
-        "....KpPKKPpK....",
-        "...KOOOKKOOOK...",
-        "...KOoOKKOoOK...",
-        "...KKKKKKKKKK...",
-    ],
-    "hoodie": [
-        "................",
-        "................",
-        "....KKKKKKKK....",
-        "...KHHHHHHHHK...",
-        "..KHHhHHHHhHHK..",
-        "..KHHHHHHHHHHK..",
-        "..KHHHHHHHHHHK..",
-        "..KHHHHSHHHHHK..",
-        "..KHBBSSSSBBHK..",
-        "..KSSSSSSSSSSK..",
-        ".KSSSESSSSESSSK.",
-        ".KSSSESSSSESSSK.",
-        "..KsSSSSSSSSsK..",
-        "..KsSSSMMSSSsK..",
-        "...KsSSSSSSsK...",
-        "...KTKssssKTK...",
-        "..KTTTwTTwTTTK..",
-        "..KTTTwTTwTTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KTTttttttTTK..",
-        "..KTTtTTTTtTTK..",
-        "..KSSKPPPPKSSK..",
-        "...KKPPPPPPKK...",
-        "....KPPPPPPK....",
-        "....KPPKKPPK....",
-        "....KPPKKPPK....",
-        "....KPPKKPPK....",
-        "....KpPKKPpK....",
-        "...KOOOKKOOOK...",
-        "...KOoOKKOoOK...",
-        "...KKKKKKKKKK...",
-    ],
-}
-
-CUSTOMER_LOOKS = {
-    "cap_red": ("cap", {"R": (200, 60, 60), "r": (160, 40, 44), "S": (176, 120, 86), "s": (146, 96, 68),
-                        "H": (30, 22, 20), "T": (232, 232, 236), "t": (200, 200, 210),
-                        "P": (190, 168, 120), "O": (236, 236, 238), "o": (196, 196, 206)}),
-    "cap_blue": ("cap", {"R": (50, 90, 170), "r": (36, 66, 130), "S": (232, 190, 156), "s": (204, 158, 124),
-                         "H": (120, 80, 50), "T": (240, 170, 60), "t": (210, 140, 40),
-                         "P": (70, 80, 100), "O": (40, 40, 46), "o": (90, 90, 100)}),
-    "cap_green": ("cap", {"R": (70, 140, 80), "r": (50, 110, 60), "S": (210, 160, 120), "s": (180, 130, 96),
-                          "H": (40, 30, 26), "T": (60, 60, 70), "t": (46, 46, 54),
-                          "P": (90, 120, 170), "O": (236, 236, 238), "o": (196, 196, 206)}),
-    "senora": ("senora", {"H": (176, 176, 184), "h": (214, 214, 220), "B": (140, 140, 150),
-                          "S": (232, 186, 150), "s": (204, 156, 122),
-                          "T": (130, 80, 150), "t": (104, 62, 124),
-                          "P": (60, 62, 76), "p": (76, 78, 92), "O": (40, 40, 46), "o": (80, 80, 90)}),
-    "hoodie_green": ("hoodie", {"H": (170, 130, 80), "h": (206, 166, 110), "B": (130, 96, 60),
-                                "S": (240, 206, 176), "s": (212, 172, 140),
-                                "T": (80, 140, 96), "t": (60, 112, 76),
-                                "P": (130, 134, 144), "p": (110, 114, 124),
-                                "O": (236, 236, 238), "o": (196, 196, 206)}),
-    "hoodie_purple": ("hoodie", {"H": (30, 24, 24), "h": (64, 50, 50), "B": (30, 24, 24),
-                                 "S": (196, 140, 104), "s": (166, 112, 80),
-                                 "T": (120, 90, 170), "t": (96, 70, 140),
-                                 "P": (50, 60, 90), "p": (66, 76, 108),
-                                 "O": (236, 236, 238), "o": (196, 196, 206)}),
-}
-
 ICONS = {  # need bubbles: what the customer came in for
     "bill": (["..#..", ".####", "#.#..", ".###.", "..#.#", "####."], (60, 160, 80)),
     "phone": (["####", "#bb#", "#bb#", "#bb#", "#bb#", "####"], DARK),
@@ -561,13 +430,13 @@ def paint(grid, palette):
 
 
 def crew(name):
-    data = CHARACTERS[name]
-    return paint(data["grid"], {**BASE, **data["palette"]})
+    data = CREW[name]
+    return paint(data["front"], {**BASE, **data["palette"]})
 
 
 def customer(look):
     shape, palette = CUSTOMER_LOOKS[look]
-    return paint(CUSTOMERS[shape], {**BASE, **palette})
+    return paint(CUSTOMER_SHAPES[shape]["front"], {**BASE, **palette})
 
 
 def bubble(img, x, y, icon):
